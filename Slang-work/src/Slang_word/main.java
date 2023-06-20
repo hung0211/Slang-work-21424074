@@ -45,6 +45,9 @@ public class main {
                 case "5":
                     editSlangWord();
                     break;
+                case "6":
+                    deleteSlangWord();
+                    break;
                 case "0":
                     System.out.println("exited!");
                     exit = true;
@@ -60,6 +63,24 @@ public class main {
         }
     }
     
+    private static void deleteSlangWord() {
+        System.out.println("");
+        Scanner kb = new Scanner(System.in);
+        System.out.print("Please enter the key of the slang word you want to delete: ");
+        String key = kb.nextLine();
+        if (SlangWord.findByKey(key) == null) {
+            System.out.println("SLang word not found.");
+        } else {
+            System.out.print("Are you sure? (y/n): ");
+            String choose = kb.nextLine();
+            if (choose.endsWith("y")) {
+                SlangWord.remove(key);
+                truncateFile("slang.txt");
+                System.out.println("Succcessfully removed " + key);
+            }
+
+        }
+    }
     
        private static void editSlangWord() {
         System.out.println("");
