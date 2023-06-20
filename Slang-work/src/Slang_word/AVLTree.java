@@ -247,4 +247,37 @@ public class AVLTree implements Serializable{
         }
         return check;
     }
+    public void removeAll(Entry check) {
+        if (check != null) {
+            removeAll(check.Left);
+            remove(check.key);
+            removeAll(check.Right);
+        }
+    }
+    
+    public int children(Entry root) {
+        if (root == null) {
+            return 0;
+        }
+        return root.children + 1;
+    }
+
+    public Entry randomNode(Entry root, int rand) {
+        if (root == null) {
+            return null; // current is chosen,
+        }
+        if (rand == children(root.Left)) {
+            return root;
+        }
+        if (rand < children(root.Left)) {
+            return randomNode(root.Left, rand);
+        }
+        return randomNode(root.Right, rand - children(root.Left) - 1);
+    }
+
+    public Entry randomNode(Entry root) {
+        int rand = (int) (Math.random() * (root.height + 1));
+        return randomNode(root, rand);
+    }
 }
+

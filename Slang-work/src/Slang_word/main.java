@@ -48,6 +48,13 @@ public class main {
                 case "6":
                     deleteSlangWord();
                     break;
+                case "7":
+                    resetOriginList();
+                    break;
+                case "8":
+                    Entry slw = randomSlangWord();
+                    System.out.println(slw.toString());
+                    break;
                 case "0":
                     System.out.println("exited!");
                     exit = true;
@@ -61,6 +68,17 @@ public class main {
                 break;
             }
         }
+    }
+    
+    public static Entry randomSlangWord() {
+        return SlangWord.randomNode(SlangWord.root);
+    }
+    
+     public static void resetOriginList() {
+        SlangWord.removeAll(SlangWord.root);
+        readFile("origin.txt", SlangWord);
+        truncateFile("slang.txt");
+        System.out.println("!!! Set this as origin successfully !!!");
     }
     
     private static void deleteSlangWord() {
