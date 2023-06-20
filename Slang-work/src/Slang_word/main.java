@@ -29,6 +29,9 @@ public class main {
             menu();
             choose = kb.nextLine();
             switch (choose) {
+                case "1":
+                    findByKey();
+                    break;
                 case "0":
                     System.out.println("exited!");
                     exit = true;
@@ -43,6 +46,22 @@ public class main {
             }
         }
     }
+    
+    private static void findByKey() {
+        System.out.println("");
+        Scanner kb = new Scanner(System.in);
+        System.out.print("\nEnter the slang word you would like to find: ");
+        String find = kb.nextLine();
+        Entry found = SlangWord.findByKey(find);
+
+        if (found == null) {
+            System.out.println("Slang word not found.");
+        } else {
+            System.out.println(found.toString());
+            found.writeLine("history.txt");
+        }
+    }
+    
     static void pressEnter() {
         String key_press = "";
         do {
