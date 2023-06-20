@@ -55,6 +55,9 @@ public class main {
                     Entry slw = randomSlangWord();
                     System.out.println(slw.toString());
                     break;
+                 case "9":
+                    quizByKey();
+                    break;
                 case "0":
                     System.out.println("exited!");
                     exit = true;
@@ -67,6 +70,33 @@ public class main {
             if (exit) {
                 break;
             }
+        }
+    }
+    
+    public static void quizByKey() {
+        Random rd = new Random();
+        List<Entry> answer = new ArrayList<Entry>();
+        Entry temp = randomSlangWord();
+        for (int i = 0; i < 4; i++) {
+            while (answer.contains(temp)) {
+                temp = randomSlangWord();
+            }
+            answer.add(temp);
+        }
+        int correct = rd.nextInt(3);
+        Scanner kb = new Scanner(System.in);
+        System.out.println("\n^^ The mysterious slang word is: " + answer.get(correct).key);
+        System.out.println("Answer: ");
+        System.out.println("1. " + answer.get(0).definition);
+        System.out.println("2. " + answer.get(1).definition);
+        System.out.println("3. " + answer.get(2).definition);
+        System.out.println("4. " + answer.get(3).definition);
+        System.out.print("\nYour choose is: ");
+        int choose = kb.nextInt();
+        if (choose - 1 == correct) {
+            System.out.println("Congrat!!! Correct answer !!!");
+        } else {
+            System.out.println("Oops!!! Wrong answer");
         }
     }
     
