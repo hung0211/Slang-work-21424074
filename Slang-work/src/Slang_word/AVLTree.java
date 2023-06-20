@@ -185,4 +185,66 @@ public class AVLTree implements Serializable{
     public List<Entry> findByDefinition(String val) {
         return findByDefinition(val, root);
     }
+    
+    public void remove(String x) {
+
+        root = remove(x, root);
+    }
+
+
+    private Entry findMinNode(Entry find) {
+        if (find.Left == null) {
+            return find;
+        } else {
+            return findMinNode(find.Left);
+        }
+    }
+
+    private Entry remove(String key, Entry check) {
+        if (check == null) {
+            return check;
+        } else if (key.compareTo(check.key) < 0) {
+            check.Left = remove(key, check.Left);
+
+        } else if (key.compareTo(check.key) > 0) {
+            check.Right = remove(key, check.Right);
+        } else {
+            if (check.Right == null || check.Left == null) {
+                Entry temp = null;
+                if (check.Left == null) {
+                    temp = check.Right;
+                } else {
+                    temp = check.Left;
+                }
+                if (temp == null) {
+                    check = null;
+                } else {
+                    check = temp;
+                }
+            } else {
+                Entry temp = findMinNode(check.Right);
+                check = temp;
+                check.Right = remove(key, check.Right);
+            }
+        }
+        if (check == null) {
+            return check;
+        }
+        if (getHeight(check.Left) - getHeight(check.Right) == 2) {
+            Entry leftCheck = check.Left;
+            if (getHeight(leftCheck.Left) - getHeight(leftCheck.Right) < 0) {
+                check = doubleWithLeft(check);
+            } else {
+                check = rotateWithLeft(check);
+            }
+        } else if (getHeight(check.Right) - getHeight(check.Left) == 2) {
+            Entry rightCheck = check.Right;
+            if (getHeight(rightCheck.Left) - getHeight(rightCheck.Right) > 0) {
+                check = doubleWithRight(check);
+            } else {
+                check = rotateWithRight(check);
+            }
+        }
+        return check;
+    }
 }
